@@ -9,16 +9,16 @@
 
 // Face Mesh - https://github.com/tensorflow/tfjs-models/tree/master/facemesh
 
-import React, { useRef, useEffect } from "react";
-import "./App.css";
-import * as tf from "@tensorflow/tfjs";
+import React, { useRef, useEffect } from 'react';
+import './App.css';
+import '@tensorflow/tfjs';
 // OLD MODEL
 //import * as facemesh from "@tensorflow-models/facemesh";
 
 // NEW MODEL
-import * as facemesh from "@tensorflow-models/face-landmarks-detection";
-import Webcam from "react-webcam";
-import { drawMesh } from "./utilities";
+import * as facemesh from '@tensorflow-models/face-landmarks-detection';
+import Webcam from 'react-webcam';
+import { drawMesh } from './utilities';
 
 function App() {
   const webcamRef = useRef(null);
@@ -32,7 +32,9 @@ function App() {
     //   scale: 0.8,
     // });
     // NEW MODEL
-    const net = await facemesh.load(facemesh.SupportedPackages.mediapipeFacemesh);
+    const net = await facemesh.load(
+      facemesh.SupportedPackages.mediapipeFacemesh
+    );
     setInterval(() => {
       detect(net);
     }, 10);
@@ -40,7 +42,7 @@ function App() {
 
   const detect = async (net) => {
     if (
-      typeof webcamRef.current !== "undefined" &&
+      typeof webcamRef.current !== 'undefined' &&
       webcamRef.current !== null &&
       webcamRef.current.video.readyState === 4
     ) {
@@ -61,16 +63,20 @@ function App() {
       // OLD MODEL
       //       const face = await net.estimateFaces(video);
       // NEW MODEL
-      const face = await net.estimateFaces({input:video});
+      const face = await net.estimateFaces({ input: video });
       console.log(face);
 
       // Get canvas context
-      const ctx = canvasRef.current.getContext("2d");
-      requestAnimationFrame(()=>{drawMesh(face, ctx)});
+      const ctx = canvasRef.current.getContext('2d');
+      requestAnimationFrame(() => {
+        drawMesh(face, ctx);
+      });
     }
   };
 
-  useEffect(()=>{runFacemesh()}, []);
+  useEffect(() => {
+    runFacemesh();
+  }, []);
 
   return (
     <div className="App">
@@ -78,12 +84,12 @@ function App() {
         <Webcam
           ref={webcamRef}
           style={{
-            position: "absolute",
-            marginLeft: "auto",
-            marginRight: "auto",
+            position: 'absolute',
+            marginLeft: 'auto',
+            marginRight: 'auto',
             left: 0,
             right: 0,
-            textAlign: "center",
+            textAlign: 'center',
             zindex: 9,
             width: 640,
             height: 480,
@@ -93,12 +99,12 @@ function App() {
         <canvas
           ref={canvasRef}
           style={{
-            position: "absolute",
-            marginLeft: "auto",
-            marginRight: "auto",
+            position: 'absolute',
+            marginLeft: 'auto',
+            marginRight: 'auto',
             left: 0,
             right: 0,
-            textAlign: "center",
+            textAlign: 'center',
             zindex: 9,
             width: 640,
             height: 480,
